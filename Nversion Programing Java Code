@@ -1,0 +1,94 @@
+package practicassc3;
+
+public class NversionProgramming extends AbstractAlgorithmSorting implements Runnable {
+
+  Quicksort quicks = new Quicksort();
+  Mergesort merges = new Mergesort();
+  Heapsort heaps = new Heapsort();
+  boolean injectFailure = false;
+
+  @Override
+  public void sort() throws CannotBeSortedException {
+
+    Thread th1 = new Thread(this);
+    th1.setName("Quicksort");
+    th1.start();
+
+    Thread th2 = new Thread(this);
+    th2.setName("Mergesort");
+    th2.start();
+
+    Thread th3 = new Thread(this);
+    th3.setName("Heapsort");
+    th3.start();
+
+    try {
+      th1.join();
+
+      th2.join();
+
+      th3.join();
+
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    if (orderCheck(quicks.getData(), merges.getData())) {
+      this.setData(quicks.getData());
+
+    } else if (orderCheck(quicks.getData(), heaps.getData())) {
+      this.setData(quicks.getData());
+
+    } else if (orderCheck(merges.getData(), heaps.getData())) {
+      this.setData(heaps.getData());
+
+    } else {
+      throw new CannotBeSortedException("Just cant be sorted or fixed");
+
+    }
+  }
+
+  @Override
+  public String getName() {
+    return "NversionProgramming";
+
+  }
+
+  private boolean orderCheck(int[] CheckA, int[] CheckB) {
+
+    for (int i = 0; i < CheckA.length - 1; i++) {
+      if (CheckA[i] != CheckB[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @Override
+  public void run() {
+    String Zec = Thread.currentThread().getName();
+    switch (Zec) {
+      case "Quicksort":
+        quicks.setData(this.getData());
+        injectFailure = this.isMethodFaulty(0) ? true : false;
+
+        quicks.setMethodsFaulty(injectFailure);
+        quicks.sort();
+        break;
+      case "Mergesort":
+        merges.setData(this.getData());
+        injectFailure = this.isMethodFaulty(1) ? true : false;
+
+        merges.setMethodsFaulty(injectFailure);
+        merges.sort();
+        break;
+      default:
+        heaps.setData(this.getData());
+        injectFailure = this.isMethodFaulty(2) ? true : false;
+
+        heaps.setMethodsFaulty(injectFailure);
+        heaps.sort();
+        break;
+    }
+  }
+}
