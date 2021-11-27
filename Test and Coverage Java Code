@@ -1,0 +1,223 @@
+package Test;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import practicassc3.CannotBeSortedException;
+import practicassc3.Heapsort;
+import practicassc3.Mergesort;
+import practicassc3.NversionProgramming;
+import practicassc3.Quicksort;
+import practicassc3.RecoveryBlock;
+
+public class AlgorithmTest {
+  Mergesort merges = new Mergesort();
+
+  Quicksort quicks = new Quicksort();
+
+  Heapsort heaps = new Heapsort();
+
+  RecoveryBlock recovery = new RecoveryBlock();
+
+  NversionProgramming nversion = new NversionProgramming();
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testMerge(int[] test, int[] solution) {
+    merges.setData(test);
+    merges.setMethodsFaulty(true);
+    merges.sort();
+    assertArrayEquals(merges.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testQuick(int[] test, int[] solution) {
+    quicks.setData(test);
+    quicks.setMethodsFaulty(true);
+    quicks.sort();
+    assertArrayEquals(quicks.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testHeap(int[] test, int[] solution) {
+    heaps.setData(test);
+    heaps.setMethodsFaulty(true);
+    heaps.sort();
+    assertArrayEquals(heaps.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock1(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { true, true, true });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock2(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { true, true, false });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock3(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { true, false, false });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock4(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { false, false, false });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock5(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { false, false, true });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock6(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { false, true, true });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock7(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { true, false, true });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testRecoveryBlock8(int[] test, int[] solution) throws CannotBeSortedException {
+    recovery.setData(test);
+    recovery.setMethodsFaulty(new boolean[] { true, true, true });
+    recovery.sort();
+    assertArrayEquals(recovery.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion1(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { true, true, true });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion2(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { true, true, false });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion3(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { true, false, false });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion4(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { false, false, false });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion5(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { false, false, true });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion6(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { false, true, true });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion7(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { true, false, true });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  @ParameterizedTest
+  @MethodSource("dataProvider")
+  void testNversion8(int[] test, int[] solution) throws CannotBeSortedException {
+    nversion.setData(test);
+    nversion.setMethodsFaulty(new boolean[] { false, true, false });
+    nversion.sort();
+    assertArrayEquals(nversion.getData(), solution);
+  }
+
+  static Stream<Arguments> dataProvider() {
+    return Stream.of(
+        Arguments.of(new int[] { 2, 7, 1, 9, 3, 4, 8, 6, 5 },
+            new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }),
+        Arguments.of(new int[] {}, new int[] {}),
+        Arguments.of(new int[] { -2, 1, 8, 0 }, new int[] { -2, 0, 1, 8 }),
+        Arguments.of(new int[] { 5 }, new int[] { 5 }),
+        Arguments.of(new int[] { 8, -1 }, new int[] { -1, 8 }),
+        Arguments.of(new int[] { 7, 7, 7 }, new int[] { 7, 7, 7 }),
+        Arguments.of(new int[] { 5, 2, 3, 4, 5, 1 }, new int[] { 1, 2, 3, 4, 5, 5 }),
+        Arguments.of(new int[] { 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0, }),
+        Arguments.of(new int[] { -2, -4, -1, -8, -9 }, new int[] { -9, -8, -4, -2, -1 }),
+        Arguments.of(new int[] { 3, 2, 1 }, new int[] { 1, 2, 3 }),
+        Arguments.of(new int[] { -7, -6, -5, -4, -3, -2, -1 },
+            new int[] { -7, -6, -5, -4, -3, -2, -1 }),
+        Arguments.of(new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8 }),
+        Arguments.of(new int[] { -1, -5, -6, -2, -3, -4, -4 },
+            new int[] { -6, -5, -4, -4, -3, -2, -1 })
+
+    );
+  }
+
+}
