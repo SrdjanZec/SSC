@@ -1,0 +1,59 @@
+# SSC
+Project 3
+package practicassc3;
+
+public class RecoveryBlock extends AbstractAlgorithmSorting {
+
+   /* default */ Quicksort quicks = new Quicksort();
+   /* default */ Mergesort merges = new Mergesort();
+  Heapsort heaps = new Heapsort();
+  boolean injectFailure = false;
+
+  @Override
+  public void sort() throws CannotBeSortedException {
+    quicks.setData(this.getData());
+    injectFailure = this.isMethodFaulty(0) ? true : false;
+    quicks.setMethodsFaulty(injectFailure);
+    quicks.sort();
+
+    if (orderCheck(quicks.getData())) {
+      this.setData(quicks.getData());
+
+      System.out.println("QuickSort Sorting");
+    } else {
+      merges.setData(this.getData());
+      injectFailure = this.isMethodFaulty(1) ? true : false;
+      merges.setMethodsFaulty(injectFailure);
+      merges.sort();
+      if (orderCheck(merges.getData())) {
+        this.setData(merges.getData());
+        System.out.println("MergeSort Sorting");
+      } else {
+        heaps.setData(this.getData());
+        injectFailure = this.isMethodFaulty(2) ? true : false;
+        heaps.setMethodsFaulty(injectFailure);
+        heaps.sort();
+        if (orderCheck(heaps.getData())) {
+          this.setData(heaps.getData());
+          System.out.println("HeapSort Sorting");
+        } else {
+          throw new CannotBeSortedException("Just cant order and sort this");
+        }
+      }
+    }
+  }
+
+  public String getName() {
+    return "RecoveryBlock";
+  }
+
+  private boolean orderCheck(int[] Check) {
+    for (int i = 0; i < Check.length - 1; i++) {
+      if (Check[i] > Check[i + 1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+		
